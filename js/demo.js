@@ -3755,6 +3755,7 @@ var Modal = function (_React$Component) {
     _this.handleKeydown = _this.handleKeydown.bind(_this);
     _this.onClickOverlay = _this.onClickOverlay.bind(_this);
     _this.state = {
+      showPortal: false,
       open: false
     };
     return _this;
@@ -3770,8 +3771,19 @@ var Modal = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
       if (nextProps.open) {
         document.body.style.overflow = 'hidden';
+        this.setState({ open: true, showPortal: true });
+      }
+      if (this.props.open && !nextProps.open) {
+        this.setState({ open: false });
+        // Let the animation finish
+        setTimeout(function () {
+          _this2.setState({ showPortal: false });
+          document.body.style.overflow = null;
+        }, 500);
       }
     }
   }, {
@@ -3807,13 +3819,15 @@ var Modal = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _props2 = this.props;
-      var open = _props2.open;
       var little = _props2.little;
       var classes = _props2.sheet.classes;
       var overlayClassName = _props2.overlayClassName;
       var modalClassName = _props2.modalClassName;
+      var _state = this.state;
+      var open = _state.open;
+      var showPortal = _state.showPortal;
 
-      if (!open) return null;
+      if (!showPortal) return null;
       return _react2.default.createElement(
         _reactMinimalistPortal2.default,
         null,
@@ -3834,7 +3848,7 @@ var Modal = function (_React$Component) {
             transitionEnterTimeout: 500,
             transitionLeaveTimeout: 500
           },
-          _react2.default.createElement(
+          open && _react2.default.createElement(
             'div',
             {
               className: (0, _classnames2.default)(classes.overlay, little ? classes.overlayLittle : null, overlayClassName),
