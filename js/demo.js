@@ -3763,7 +3763,9 @@ var Modal = function (_React$Component) {
   _createClass(Modal, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      document.addEventListener('keydown', this.handleKeydown);
+      if (this.props.closeOnEsc) {
+        document.addEventListener('keydown', this.handleKeydown);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -3775,16 +3777,21 @@ var Modal = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      document.removeEventListener('keydown', this.handleKeydown);
+      if (this.props.closeOnEsc) {
+        document.removeEventListener('keydown', this.handleKeydown);
+      }
       document.body.style.overflow = null;
     }
   }, {
     key: 'onClickOverlay',
     value: function onClickOverlay(e) {
-      var classes = this.props.sheet.classes;
+      var _props = this.props;
+      var classes = _props.sheet.classes;
+      var closeOnOverlayClick = _props.closeOnOverlayClick;
 
+      if (!closeOnOverlayClick) return;
       var className = e.target.className.split(' ');
-      if (className.indexOf(classes.modal) !== -1) {
+      if (className.indexOf(classes.overlay) !== -1) {
         e.stopPropagation();
         this.props.onClose();
       }
@@ -3799,10 +3806,12 @@ var Modal = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props;
-      var open = _props.open;
-      var little = _props.little;
-      var classes = _props.sheet.classes;
+      var _props2 = this.props;
+      var open = _props2.open;
+      var little = _props2.little;
+      var classes = _props2.sheet.classes;
+      var overlayClassName = _props2.overlayClassName;
+      var modalClassName = _props2.modalClassName;
 
       if (!open) return null;
       return _react2.default.createElement(
@@ -3828,17 +3837,13 @@ var Modal = function (_React$Component) {
           _react2.default.createElement(
             'div',
             {
-              className: little ? (0, _classnames2.default)(classes.modal, classes.modalLittle) : classes.modal,
+              className: (0, _classnames2.default)(classes.overlay, little ? classes.overlayLittle : null, overlayClassName),
               onClick: this.onClickOverlay
             },
             _react2.default.createElement(
               'div',
-              { className: classes.dialog },
-              _react2.default.createElement(
-                'div',
-                { className: classes.content },
-                this.props.children
-              )
+              { className: (0, _classnames2.default)(classes.modal, modalClassName) },
+              this.props.children
             )
           )
         )
@@ -3850,13 +3855,21 @@ var Modal = function (_React$Component) {
 }(_react2.default.Component);
 
 Modal.propTypes = {
+  closeOnEsc: _react2.default.PropTypes.bool,
+  closeOnOverlayClick: _react2.default.PropTypes.bool,
   onClose: _react2.default.PropTypes.func,
   open: _react2.default.PropTypes.bool,
-  className: _react2.default.PropTypes.string,
+  overlayClassName: _react2.default.PropTypes.string,
+  modalClassName: _react2.default.PropTypes.string,
   children: _react2.default.PropTypes.node,
   classes: _react2.default.PropTypes.object,
   sheet: _react2.default.PropTypes.object,
   little: _react2.default.PropTypes.bool
+};
+
+Modal.defaultProps = {
+  closeOnEsc: true,
+  closeOnOverlayClick: true
 };
 
 exports.default = useSheet(Modal, _styles2.default);
@@ -3867,7 +3880,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  modal: {
+  overlay: {
     background: 'rgba(0, 0, 0, 0.75)',
     display: 'flex',
     alignItems: 'flex-start',
@@ -3879,16 +3892,14 @@ exports.default = {
     bottom: 0,
     overflowY: 'auto',
     overflowX: 'hidden',
-    zIndex: 1000
-  },
-  modalLittle: {
-    alignItems: 'center'
-  },
-  dialog: {
-    maxWidth: 800,
+    zIndex: 1000,
     padding: '1.2rem'
   },
-  content: {
+  overlayLittle: {
+    alignItems: 'center'
+  },
+  modal: {
+    maxWidth: 800,
     position: 'relative',
     padding: '1.2rem',
     background: '#ffffff',
