@@ -35,7 +35,7 @@
   "homepage": "https://github.com/pradel/react-responsive-modal#readme",
   "dependencies": {
     "classnames": "^2.2.5",
-    "no-scroll": "^2.1.0",
+    "no-scroll": "github:truongthanh1303/no-scroll",
     "prop-types": "^15.6.1",
     "react-jss": "^8.4.0",
     "react-lifecycles-compat": "^3.0.2",
