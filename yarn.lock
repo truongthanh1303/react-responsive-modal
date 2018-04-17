@@ -4830,9 +4830,9 @@ neo-async@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.0.tgz#76b1c823130cca26acfbaccc8fbaf0a2fa33b18f"
 
-no-scroll@^2.1.0:
+"no-scroll@github:truongthanh1303/no-scroll":
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/no-scroll/-/no-scroll-2.1.0.tgz#f8643b3ddb6a3bf94430e5ff31d26f21d082a695"
+  resolved "https://codeload.github.com/truongthanh1303/no-scroll/tar.gz/7be98a0487ae224dafaa043ca25504a5c8af55c8"
 
 node-fetch@^1.0.1:
   version "1.6.3"
