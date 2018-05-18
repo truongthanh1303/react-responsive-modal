@@ -4,7 +4,7 @@ import { polyfill } from 'react-lifecycles-compat';
 import Portal from 'react-minimalist-portal';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import cx from 'classnames';
-import noScroll from 'no-scroll';
+// import noScroll from 'no-scroll';
 import CloseIcon from './close-icon';
 
 class Modal extends Component {
@@ -111,7 +111,7 @@ class Modal extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   blockScroll() {
-    noScroll.on();
+   // noScroll.on();
   }
 
   unblockScroll = () => {
@@ -119,7 +119,7 @@ class Modal extends Component {
       this.props.classes.modal
     );
     if (openedModals.length === 1) {
-      noScroll.off();
+     // noScroll.off();
     }
   };
 
