@@ -111,6 +111,8 @@ class Modal extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   blockScroll() {
+    var doc = document.documentElement;
+    doc.style.overflow = 'hidden';
    // noScroll.on();
   }
 
@@ -120,6 +122,8 @@ class Modal extends Component {
     );
     if (openedModals.length === 1) {
      // noScroll.off();
+      var doc = document.documentElement;
+      doc.style.overflow = '';
     }
   };
 
